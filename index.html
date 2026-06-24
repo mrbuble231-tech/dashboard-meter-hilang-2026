@@ -35,9 +35,16 @@
             <div class="card alarm-card">
                 <h2>Alarm Meter Hilang</h2>
 
-                <div class="alarm-placeholder">
-                    Belum ada laporan
-                </div>
+             <div class="alarm-box">
+
+    <div id="alarmStatus" class="alarm-status normal">
+    🟢 NORMAL
+</div>
+
+<div id="alarmInfo" class="alarm-info">
+    Belum ada meter hilang baru
+</div>
+</div>
             </div>
 
         </section>
@@ -46,34 +53,68 @@
         <section class="card chart-card">
             <h2>Diagram Batang Meter Hilang Per Zona</h2>
 
-            <div class="placeholder">
-                Area Grafik
-            </div>
+            <canvas id="zonaChart"></canvas>
         </section>
 
         <!-- BARIS BAWAH -->
         <section class="bottom-row">
 
-            <div class="card summary-card">
-                <h2>Ringkasan Per Zona</h2>
+         <div class="card summary-card">
+    <h2>Ringkasan Per Zona</h2>
 
-                <div class="placeholder">
-                    Data Zona
-                </div>
-            </div>
+    <div class="zona-list">
 
-            <div class="card latest-card">
-                <h2>Meter Hilang Terbaru</h2>
+        <div class="zona-item">
+            <span>Zona 1</span>
+            <strong id="z1">0</strong>
+        </div>
 
-                <div class="placeholder">
-                    Belum ada data
-                </div>
-            </div>
+        <div class="zona-item">
+            <span>Zona 2</span>
+            <strong id="z2">0</strong>
+        </div>
+
+        <div class="zona-item">
+            <span>Zona 3</span>
+            <strong id="z3">0</strong>
+        </div>
+
+        <div class="zona-item">
+            <span>Zona 4</span>
+            <strong id="z4">0</strong>
+        </div>
+
+        <div class="zona-item">
+            <span>Zona 5</span>
+            <strong id="z5">0</strong>
+        </div>
+
+    </div>
+</div>
+
+           <div class="card latest-card">
+    <h2>Meter Hilang Terbaru</h2>
+
+    <table class="meter-table">
+
+        <thead>
+            <tr>
+                <th>Tanggal</th>
+                <th>Zona</th>
+                <th>No Pelanggan</th>
+                <th>Alamat</th>
+            </tr>
+        </thead>
+<tbody id="latestTable">
+</tbody>
+
+    </table>
+</div>
 
         </section>
 
     </main>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
 
 </body>
