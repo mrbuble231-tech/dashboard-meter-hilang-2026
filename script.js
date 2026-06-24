@@ -1,4 +1,5 @@
-let lastAlarm = localStorage.getItem("lastAlarm") || "";
+let lastAlarm =
+localStorage.getItem("lastAlarm") || "";
 let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
 
@@ -189,6 +190,7 @@ if(currentAlarm !== lastAlarm){
 }
 }
 
+
 else{
 
     document.getElementById("alarmStatus").innerHTML =
@@ -276,3 +278,7 @@ function updateClock(){
 updateClock();
 
 setInterval(updateClock,1000);
+function testSound() {
+    const sound = document.getElementById("alarmSound");
+    sound.play();
+}
