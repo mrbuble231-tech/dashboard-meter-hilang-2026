@@ -1,3 +1,4 @@
+let lastAlarm = localStorage.getItem("lastAlarm") || "";
 let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
 
@@ -165,6 +166,27 @@ ${alarmData.pelanggan}
  | ${alarmData.zona}
  | ${alarmData.alamat}
 `;
+const currentAlarm =
+    alarmData.pelanggan + "_" +
+    alarmData.tanggal;
+
+if(currentAlarm !== lastAlarm){
+
+    const sound =
+        document.getElementById("alarmSound");
+
+    sound.play();
+
+    setTimeout(() => {
+        sound.pause();
+        sound.currentTime = 0;
+    }, 5000);
+
+    localStorage.setItem(
+        "lastAlarm",
+        currentAlarm
+    );
+}
 }
 
 else{
