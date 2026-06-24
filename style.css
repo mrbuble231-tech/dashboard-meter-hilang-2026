@@ -50,6 +50,22 @@ body{
     font-weight:bold;
     margin-top:5px;
 }
+.running-news{
+    width:95%;
+    margin:0 auto 20px auto;
+
+    background:#8b0000;
+
+    border-radius:10px;
+
+    padding:10px;
+}
+
+#runningText{
+    color:white;
+    font-weight:bold;
+    font-size:18px;
+}
 
 .dashboard{
     width:95%;
@@ -290,6 +306,27 @@ body{
     color:#ccc;
     margin-bottom:6px;
 }
+@keyframes textBlink {
+
+    0%{
+        opacity:1;
+    }
+
+    50%{
+        opacity:0.4;
+    }
+
+    100%{
+        opacity:1;
+    }
+
+}
+
+.alarm-status.active{
+    animation:
+        blinkAlarm 1s infinite,
+        textBlink 1s infinite;
+}
 
 @keyframes blinkAlarm {
 
@@ -323,4 +360,40 @@ body{
 .status-selesai{
     color:#00ff99;
     font-weight:bold;
+}
+
+.status-proses{
+    color:#ff4d4d;
+    font-weight:bold;
+}
+
+.status-selesai{
+    color:#00ff99;
+    font-weight:bold;
+}
+
+.status-baru{
+    color:#ffd93d;
+    font-weight:bold;
+}
+.footer{
+    margin-top:20px;
+    padding:15px;
+
+    text-align:center;
+
+    color:#00ff99;
+
+    font-weight:bold;
+
+    border-top:1px solid #23364f;
+}
+
+.footer span{
+    display:block;
+    margin-top:5px;
+
+    color:#ccc;
+
+    font-size:14px;
 }

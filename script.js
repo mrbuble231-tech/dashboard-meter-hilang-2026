@@ -159,7 +159,14 @@ document.getElementById("alarmStatus")
 
 document.getElementById("alarmStatus")
 .classList.add("active");
+document.getElementById("runningText").innerHTML = `
+🔴 ALARM METER HILANG :
+${alarmData.pelanggan}
+ | ${alarmData.zona}
+ | ${alarmData.alamat}
+`;
 }
+
 else{
 
     document.getElementById("alarmStatus").innerHTML =
@@ -191,6 +198,18 @@ const nama = cols[3] || "";
 const telepon = cols[4] || "";
 const golongan = cols[6] || "";
 const status = cols[7] || "";
+let statusClass = "";
+
+if(status.toUpperCase() === "PROSES"){
+    statusClass = "status-proses";
+}
+else if(status.toUpperCase() === "SELESAI"){
+    statusClass = "status-selesai";
+}
+else if(status.toUpperCase() === "BARU"){
+    statusClass = "status-baru";
+}
+
 tableBody.innerHTML += `
 <tr>
     <td>${tanggal}</td>
@@ -199,7 +218,9 @@ tableBody.innerHTML += `
     <td>${nama}</td>
     <td>${telepon}</td>
     <td>${golongan}</td>
-    <td>${status}</td>
+    <td class="${statusClass}">
+    ${status}
+</td>
 </tr>
 `;
 
