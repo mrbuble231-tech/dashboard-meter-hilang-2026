@@ -3,87 +3,78 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard Meter Hilang 2026</title>
+    <title>Dashboard Meter Hilang 2026 RHINOCEROS</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-<div class="header">
-    <h1>DASHBOARD METER HILANG 2026</h1>
-    <h2>RHINOCEROS</h2>
-</div>
+    <header class="header">
+        <h1>DASHBOARD METER HILANG 2026</h1>
+        <p>RHINOCEROS</p>
+    </header>
 
-<div class="container">
+    <main class="dashboard">
 
-    <div class="left-panel">
+        <!-- BARIS ATAS -->
+        <section class="top-row">
 
-        <div class="card">
-            <h3>Total Meter Hilang</h3>
-            <span id="totalMH">0</span>
-        </div>
+            <div class="card total-card">
+                <h2>Total Meter Hilang</h2>
+                <div class="big-number">0</div>
+            </div>
 
-        <div class="card">
-            <h3>Sudah Terpasang</h3>
-            <span id="selesai">0</span>
-        </div>
+            <div class="card map-card">
+                <h2>Peta Zona Surabaya</h2>
 
-        <div class="card">
-            <h3>Belum Terpasang</h3>
-            <span id="belum">0</span>
-        </div>
+                <div class="map-wrapper">
+                    <img src="imeges/peta-zona-surabaya.png" alt="Peta Zona Surabaya">
+                </div>
+            </div>
 
-    </div>
+            <div class="card alarm-card">
+                <h2>Alarm Meter Hilang</h2>
 
+                <div class="alarm-placeholder">
+                    Belum ada laporan
+                </div>
+            </div>
 
- <div class="map-panel">
+        </section>
 
-    <img src="images/peta-zona-surabaya.png" class="map">
+        <!-- GRAFIK -->
+        <section class="card chart-card">
+            <h2>Diagram Batang Meter Hilang Per Zona</h2>
 
-<div class="progress-ring zona1">
-    <div class="outer-circle ungu">
-        <div class="inner-circle">
-            <span id="p1">87%</span>
-        </div>
-    </div>
-</div>
+            <div class="placeholder">
+                Area Grafik
+            </div>
+        </section>
 
-<div class="progress-ring zona2">
-    <div class="outer-circle orange">
-        <div class="inner-circle">
-            <span id="p2">75%</span>
-        </div>
-    </div>
-</div>
+        <!-- BARIS BAWAH -->
+        <section class="bottom-row">
 
-<div class="progress-ring zona3">
-    <div class="outer-circle biru">
-        <div class="inner-circle">
-            <span id="p3">93%</span>
-        </div>
-    </div>
-</div>
+            <div class="card summary-card">
+                <h2>Ringkasan Per Zona</h2>
 
-<div class="progress-ring zona4">
-    <div class="outer-circle merah">
-        <div class="inner-circle">
-            <span id="p4">68%</span>
-        </div>
-    </div>
-</div>
+                <div class="placeholder">
+                    Data Zona
+                </div>
+            </div>
 
-<div class="progress-ring zona5">
-    <div class="outer-circle hijau">
-        <div class="inner-circle">
-            <span id="p5">81%</span>
-        </div>
-    </div>
-</div>
-</div>
+            <div class="card latest-card">
+                <h2>Meter Hilang Terbaru</h2>
 
+                <div class="placeholder">
+                    Belum ada data
+                </div>
+            </div>
 
+        </section>
 
-<script src="script.js"></script>
+    </main>
+
+    <script src="script.js"></script>
 
 </body>
 </html>
