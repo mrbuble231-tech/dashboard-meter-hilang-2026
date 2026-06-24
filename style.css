@@ -315,3 +315,12 @@ body{
     color:white;
     font-weight:bold;
 }
+.status-proses{
+    color:#ff4d4d;
+    font-weight:bold;
+}
+
+.status-selesai{
+    color:#00ff99;
+    font-weight:bold;
+}

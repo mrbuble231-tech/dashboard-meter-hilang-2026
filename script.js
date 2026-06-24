@@ -185,18 +185,23 @@ for(let i = rows.length - 1; i >= 1; i--){
     const cols = rows[i].split(",");
 
     const tanggal = cols[0] || "";
-    const zona = cols[1] || "";
-    const pelanggan = cols[2] || "";
-    const alamat = cols[5] || "";
-
-    tableBody.innerHTML += `
-        <tr>
-            <td>${tanggal}</td>
-            <td>${zona}</td>
-            <td>${pelanggan}</td>
-            <td>${alamat}</td>
-        </tr>
-    `;
+const zona = cols[1] || "";
+const pelanggan = cols[2] || "";
+const nama = cols[3] || "";
+const telepon = cols[4] || "";
+const golongan = cols[6] || "";
+const status = cols[7] || "";
+tableBody.innerHTML += `
+<tr>
+    <td>${tanggal}</td>
+    <td>${zona}</td>
+    <td>${pelanggan}</td>
+    <td>${nama}</td>
+    <td>${telepon}</td>
+    <td>${golongan}</td>
+    <td>${status}</td>
+</tr>
+`;
 
     tampil++;
 }
