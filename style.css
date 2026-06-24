@@ -290,3 +290,28 @@ body{
     color:#ccc;
     margin-bottom:6px;
 }
+
+@keyframes blinkAlarm {
+
+    0%{
+        background:#ff2d2d;
+        box-shadow:0 0 10px #ff2d2d;
+    }
+
+    50%{
+        background:#7a0000;
+        box-shadow:0 0 25px #ff0000;
+    }
+
+    100%{
+        background:#ff2d2d;
+        box-shadow:0 0 10px #ff2d2d;
+    }
+
+}
+
+.alarm-status.active{
+    animation:blinkAlarm 1s infinite;
+    color:white;
+    font-weight:bold;
+}
