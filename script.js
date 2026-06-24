@@ -33,6 +33,39 @@ fetch(SHEET_URL)
 .then(csv => {
 
     const rows = csv.trim().split("\n");
+    const header = rows[0];
+
+const dataRows = rows.slice(1);
+
+dataRows.sort((a,b)=>{
+
+    const aCols = a.split(",");
+    const bCols = b.split(",");
+
+    const aDate = aCols[0].split("/");
+    const bDate = bCols[0].split("/");
+
+    const dateA = new Date(
+        aDate[2],
+        aDate[1]-1,
+        aDate[0]
+    );
+
+    const dateB = new Date(
+        bDate[2],
+        bDate[1]-1,
+        bDate[0]
+    );
+
+    return dateB - dateA;
+
+});
+
+rows.length = 0;
+
+rows.push(header);
+
+rows.push(...dataRows);
 
     let zona1 = 0;
     let zona2 = 0;
@@ -80,33 +113,64 @@ for(let i=1;i<rows.length;i++){
 
     if(status === "PROSES" || status === "BARU"){
 
-        alarmData = {
-            zona: cols[1],
-            pelanggan: cols[3],
-            telepon: cols[4],
-            alamat: cols[5],
-            golongan: cols[6]
-        };
-
+ alarmData = {
+    pelanggan: cols[3],
+    zona: cols[1],
+    alamat: cols[5],
+    telepon: cols[4],
+    golongan: cols[6],
+    tanggal: cols[0]
+};
         break;
     }
 }
 if(alarmData){
 
+document.getElementById("alarmContainer").innerHTML = `
+    <div class="alarm-name">
+        👤 ${alarmData.pelanggan}
+    </div>
+
+    <div class="alarm-zona">
+        📍 ${alarmData.zona}
+    </div>
+
+    <div class="alarm-alamat">
+        ${alarmData.alamat}
+    </div>
+
+    <div class="alarm-telp">
+        ☎ ${alarmData.telepon}
+    </div>
+
+    <div class="alarm-gol">
+        🏷 Gol. ${alarmData.golongan}
+    </div>
+
+<div class="alarm-tanggal">
+    📅 ${alarmData.tanggal}
+</div>
+`;
+document.getElementById("alarmStatus").innerHTML =
+"🔴 ALARM AKTIF";
+
+document.getElementById("alarmStatus")
+.classList.remove("normal");
+
+document.getElementById("alarmStatus")
+.classList.add("active");
+}
+else{
+
     document.getElementById("alarmStatus").innerHTML =
-        "🔴 ALARM AKTIF";
+    "🟢 NORMAL";
 
-    document.getElementById("alarmStatus").classList.remove("normal");
+    document.getElementById("alarmStatus")
+    .classList.remove("active");
 
-    document.getElementById("alarmInfo").innerHTML = `
-        <b>${alarmData.pelanggan}</b><br>
-        ${alarmData.zona}<br><br>
+    document.getElementById("alarmStatus")
+    .classList.add("normal");
 
-        ${alarmData.alamat}<br><br>
-
-        Telp : ${alarmData.telepon}<br>
-        Gol : ${alarmData.golongan}
-    `;
 }
 const tableBody = document.getElementById("latestTable");
 
@@ -141,3 +205,26 @@ setInterval(() => {
 }, 60000);
 zonaChart.update();
 });
+
+function updateClock(){
+
+    const now = new Date();
+
+    const jam = now.toLocaleTimeString('id-ID');
+
+    const tanggal = now.toLocaleDateString('id-ID', {
+        day:'2-digit',
+        month:'long',
+        year:'numeric'
+    });
+
+    document.getElementById("jam").textContent =
+        jam + " WIB";
+
+    document.getElementById("tanggal").textContent =
+        tanggal;
+}
+
+updateClock();
+
+setInterval(updateClock,1000);
