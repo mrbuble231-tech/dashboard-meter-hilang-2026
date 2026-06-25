@@ -76,6 +76,8 @@ rows.push(...dataRows);
     let zona5 = 0;
 
     let total = rows.length - 1;
+    let alarmData = null;
+let zonaAktif = {};
 
     for(let i=1;i<rows.length;i++){
 
@@ -97,6 +99,37 @@ rows.push(...dataRows);
     document.getElementById("z3").textContent = zona3;
     document.getElementById("z4").textContent = zona4;
     document.getElementById("z5").textContent = zona5;
+  
+for(let i=1;i<rows.length;i++){
+
+    const cols = rows[i].split(",");
+
+    const zona = cols[1]?.trim().toUpperCase();
+    const status = cols[7]?.trim().toUpperCase();
+
+    if(status === "PROSES" || status === "BARU"){
+
+        zonaAktif[zona] =
+        (zonaAktif[zona] || 0) + 1;
+    }
+}
+let hotZona = "-";
+let jumlahKasus = 0;
+
+for(let zona in zonaAktif){
+
+    if(zonaAktif[zona] > jumlahKasus){
+
+        jumlahKasus = zonaAktif[zona];
+        hotZona = zona;
+    }
+}
+
+document.getElementById("hotZoneNama")
+.textContent = hotZona;
+
+document.getElementById("hotZoneJumlah")
+.textContent = jumlahKasus + " Kasus Aktif";
 zonaChart.data.datasets[0].data = [
     
     zona1,
@@ -105,16 +138,22 @@ zonaChart.data.datasets[0].data = [
     zona4,
     zona5
 ];
-let alarmData = null;
+
 
 for(let i=1;i<rows.length;i++){
 
     const cols = rows[i].split(",");
 
     const status = cols[7]?.trim().toUpperCase();
+const zona = cols[1]?.trim().toUpperCase();
 
-    if(status === "PROSES" || status === "BARU"){
+if(status === "PROSES" || status === "BARU"){
 
+    zonaAktif[zona] =
+    (zonaAktif[zona] || 0) + 1;
+
+        
+        
  alarmData = {
     pelanggan: cols[3],
     zona: cols[1],
