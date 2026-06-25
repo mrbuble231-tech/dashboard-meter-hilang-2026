@@ -138,6 +138,27 @@ zonaChart.data.datasets[0].data = [
     zona4,
     zona5
 ];
+let level = "🟢 NORMAL";
+
+if(jumlahKasus >= 5){
+
+    level = "🔴 KRITIS";
+}
+else if(jumlahKasus >= 3){
+
+    level = "🟠 SIAGA";
+}
+else if(jumlahKasus >= 1){
+
+    level = "🟡 WASPADA";
+}
+
+document.getElementById("levelAlarm")
+.textContent = level;
+
+document.getElementById("levelInfo")
+.textContent =
+jumlahKasus + " Kasus Aktif";
 
 
 for(let i=1;i<rows.length;i++){

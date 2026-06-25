@@ -82,11 +82,23 @@ body{
     gap:20px;
 }
 .bottom-row{
-    display:grid;
-    grid-template-columns: 350px 1fr;
+    display:flex;
     gap:20px;
+    align-items:flex-start;
+}
+.hotzone-card,
+.level-card{
+    width:320px;
+    height:120px;
 }
 
+.summary-card{
+    width:320px;
+    height:auto;
+}
+.latest-section{
+    margin-top:20px;
+}
 .card{
     background:#0d1728;
     border:1px solid #00ff99;
@@ -415,4 +427,18 @@ body{
 
 #hotZoneJumlah{
     font-size:18px;
+}
+.level-card{
+    text-align:center;
+}
+
+#levelAlarm{
+    font-size:28px;
+    font-weight:bold;
+    margin-top:10px;
+}
+
+#levelInfo{
+    font-size:18px;
+    margin-top:8px;
 }
