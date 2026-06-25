@@ -513,7 +513,7 @@ tableBody.innerHTML += `
 }
 setInterval(() => {
     location.reload();
-}, 60000);
+}, 30000);
 
 // UPDATE BAR CHART
 zonaChart.update();
