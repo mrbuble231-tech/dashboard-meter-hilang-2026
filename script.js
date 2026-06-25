@@ -7,22 +7,52 @@ const TREND_URL =
 const trendCtx =
 document.getElementById("trendChart")
 .getContext("2d");
-
 const trendChartRH = new Chart(trendCtx, {
 
-    type: "line",
-
     data: {
+
         labels: [],
-        datasets: [{
-            label: "Trend Meter Hilang",
+
+        datasets: [
+
+        {
+            type: "bar",
+
+            label: "Meter Hilang",
+
             data: [],
-            borderColor: "#00ffcc",
-            backgroundColor: "#00ffcc",
-            borderWidth: 4,
+
+            backgroundColor: [
+                "#00ffcc",
+                "#00e6b8",
+                "#00d4aa",
+                "#00c49a",
+                "#00b38a",
+                "#00a57d"
+            ],
+
+            borderRadius: 8
+        },
+
+        {
+            type: "line",
+
+            label: "Trend",
+
+            data: [],
+
+            borderColor: "#ffffff",
+
+            backgroundColor: "#ffffff",
+
+            borderWidth: 3,
+
             tension: 0.3,
+
             fill: false
-        }]
+        }
+
+        ]
     },
 
     options: {
@@ -52,7 +82,6 @@ const trendChartRH = new Chart(trendCtx, {
             }
 
         }
-
     }
 
 });
@@ -183,6 +212,17 @@ document.getElementById("hotZoneNama")
 
 document.getElementById("hotZoneJumlah")
 .textContent = jumlahKasus + " Kasus Aktif";
+const hotCard =
+document.querySelector(".hotzone-card");
+
+if(jumlahKasus > 0){
+
+    hotCard.classList.add("hot-alert");
+
+}else{
+
+    hotCard.classList.remove("hot-alert");
+}
 zonaChart.data.datasets[0].data = [
     
     zona1,
@@ -193,17 +233,37 @@ zonaChart.data.datasets[0].data = [
 ];
 let level = "🟢 NORMAL";
 
+const levelCard =
+document.querySelector(".level-card");
+
+levelCard.classList.remove(
+    "level-normal",
+    "level-waspada",
+    "level-siaga",
+    "level-kritis"
+);
+
 if(jumlahKasus >= 5){
 
     level = "🔴 KRITIS";
+    levelCard.classList.add("level-kritis");
+
 }
 else if(jumlahKasus >= 3){
 
     level = "🟠 SIAGA";
+    levelCard.classList.add("level-siaga");
+
 }
 else if(jumlahKasus >= 1){
 
     level = "🟡 WASPADA";
+    levelCard.classList.add("level-waspada");
+
+}
+else{
+
+    levelCard.classList.add("level-normal");
 }
 
 document.getElementById("levelAlarm")
@@ -409,8 +469,29 @@ fetch(TREND_URL)
     trendChartRH.data.labels = bulan;
 
     trendChartRH.data.datasets[0].data = kasus;
+    trendChartRH.data.datasets[1].data = kasus;
 
     trendChartRH.update();
+    const maxKasus = Math.max(...kasus);
+const minKasus = Math.min(...kasus);
+
+const bulanMax =
+bulan[kasus.indexOf(maxKasus)];
+
+const bulanMin =
+bulan[kasus.indexOf(minKasus)];
+
+document.getElementById("bulanTertinggi")
+.textContent = bulanMax;
+
+document.getElementById("nilaiTertinggi")
+.textContent = maxKasus + " Kasus";
+
+document.getElementById("bulanTerendah")
+.textContent = bulanMin;
+
+document.getElementById("nilaiTerendah")
+.textContent = minKasus + " Kasus";
 
 });
 function updateClock(){

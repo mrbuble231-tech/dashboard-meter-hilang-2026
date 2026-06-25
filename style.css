@@ -98,13 +98,53 @@ body{
 
 .trend-card{
     width:420px;
-    height:250px;
+    height:260px;
+    overflow:hidden;
 }
 
+#trendChart{
+    width:100% !important;
+    height:160px !important;
+}
 .hotzone-card,
 .level-card{
     min-height:120px;
     height:auto;
+}
+.level-normal{
+    border:2px solid #22c55e;
+    box-shadow:0 0 15px #22c55e;
+}
+
+.level-waspada{
+    border:2px solid #facc15;
+    box-shadow:0 0 15px #facc15;
+}
+
+.level-siaga{
+    border:2px solid #fb923c;
+    box-shadow:0 0 20px #fb923c;
+}
+
+.level-kritis{
+    border:2px solid #ef4444;
+    box-shadow:0 0 25px #ef4444;
+    animation: kritisBlink 1s infinite;
+}
+
+@keyframes kritisBlink{
+
+    0%{
+        box-shadow:0 0 10px #ef4444;
+    }
+
+    50%{
+        box-shadow:0 0 35px #ef4444;
+    }
+
+    100%{
+        box-shadow:0 0 10px #ef4444;
+    }
 }
 .summary-card{
     width:260px;
@@ -141,7 +181,7 @@ body{
 }
 
 .map-card{
-    min-height:650px;
+    overflow:hidden;
 }
 
 .map-wrapper{
@@ -533,4 +573,40 @@ body{
     display:flex;
     gap:15px;
     align-items:flex-start;
+}
+.insight-card{
+    width:220px;
+    min-height:120px;
+    text-align:center;
+}
+
+#bulanTertinggi,
+#bulanTerendah{
+    font-size:24px;
+    font-weight:bold;
+    color:#00ffcc;
+}
+@keyframes hotBlink {
+
+    0%{
+        box-shadow: 0 0 10px #ff6600;
+    }
+
+    50%{
+        box-shadow: 0 0 35px #ff3300;
+        transform: scale(1.02);
+    }
+
+    100%{
+        box-shadow: 0 0 10px #ff6600;
+    }
+}
+
+.hot-alert{
+    animation: hotBlink 1.5s infinite;
+}
+.map-card img{
+    width:100%;
+    max-width:100%;
+    height:auto;
 }
