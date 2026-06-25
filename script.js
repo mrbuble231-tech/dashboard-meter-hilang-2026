@@ -4,7 +4,10 @@ let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
 const TREND_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?gid=1078006060&single=true&output=csv";
-
+let bulanMax = "-";
+let bulanMin = "-";
+let maxKasus = 0;
+let minKasus = 0;
 const trendCtx =
 document.getElementById("trendChart")
 .getContext("2d");
