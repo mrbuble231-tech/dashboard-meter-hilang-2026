@@ -1,10 +1,10 @@
-
 const lastAlarm =
 localStorage.getItem("lastAlarm") || "";
 let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
 const TREND_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?gid=1078006060&single=true&output=csv";
+
 const trendCtx =
 document.getElementById("trendChart")
 .getContext("2d");
@@ -121,8 +121,16 @@ const progressChart = new Chart(progressCtx, {
         plugins: {
 
             legend: {
+
+                position: "bottom",
+
                 labels: {
-                    color: "white"
+
+                    color: "white",
+
+                    font: {
+                        size: 10
+                    }
                 }
             }
         }
@@ -185,6 +193,13 @@ dataRows.sort((a,b)=>{
     );
 
     return dateB - dateA;
+
+});
+rows.length = 0;
+
+rows.push(header);
+rows.push(...dataRows);
+
 let zona1 = 0;
 let zona2 = 0;
 let zona3 = 0;
@@ -195,31 +210,15 @@ let total = rows.length - 1;
 let alarmData = null;
 let zonaAktif = {};
 
-// PROGRESS PENANGANAN
 let selesai = 0;
 let proses = 0;
 let baru = 0;
-});
-
 rows.length = 0;
 
 rows.push(header);
-
 rows.push(...dataRows);
 
-    let zona1 = 0;
-    let zona2 = 0;
-    let zona3 = 0;
-    let zona4 = 0;
-    let zona5 = 0;
-let selesai = 0;
-let proses = 0;
-let baru = 0;
-    let total = rows.length - 1;
-    let alarmData = null;
-let zonaAktif = {};
-
-   for(let i=1;i<rows.length;i++){
+for(let i=1;i<rows.length;i++){
 
     const cols = rows[i].split(",");
 
