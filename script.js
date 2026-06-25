@@ -1,4 +1,5 @@
-let lastAlarm =
+
+const lastAlarm =
 localStorage.getItem("lastAlarm") || "";
 let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
@@ -85,6 +86,48 @@ const trendChartRH = new Chart(trendCtx, {
     }
 
 });
+const progressCtx =
+document.getElementById("progressChart")
+.getContext("2d");
+
+const progressChart = new Chart(progressCtx, {
+
+    type: "doughnut",
+
+    data: {
+        labels: [
+            "SELESAI",
+            "PROSES",
+            "BARU"
+        ],
+
+        datasets: [{
+            data: [0,0,0],
+
+            backgroundColor: [
+                "#00ff99",
+                "#ffcc00",
+                "#ff3333"
+            ],
+
+            borderWidth: 2
+        }]
+    },
+
+    options: {
+
+        responsive: true,
+
+        plugins: {
+
+            legend: {
+                labels: {
+                    color: "white"
+                }
+            }
+        }
+    }
+});
 const ctx = document.getElementById('zonaChart');
 
 zonaChart = new Chart(ctx,{
@@ -142,7 +185,20 @@ dataRows.sort((a,b)=>{
     );
 
     return dateB - dateA;
+let zona1 = 0;
+let zona2 = 0;
+let zona3 = 0;
+let zona4 = 0;
+let zona5 = 0;
 
+let total = rows.length - 1;
+let alarmData = null;
+let zonaAktif = {};
+
+// PROGRESS PENANGANAN
+let selesai = 0;
+let proses = 0;
+let baru = 0;
 });
 
 rows.length = 0;
@@ -156,24 +212,31 @@ rows.push(...dataRows);
     let zona3 = 0;
     let zona4 = 0;
     let zona5 = 0;
-
+let selesai = 0;
+let proses = 0;
+let baru = 0;
     let total = rows.length - 1;
     let alarmData = null;
 let zonaAktif = {};
 
-    for(let i=1;i<rows.length;i++){
+   for(let i=1;i<rows.length;i++){
 
-        const cols = rows[i].split(",");
+    const cols = rows[i].split(",");
 
-        const zona = cols[1]?.trim().toUpperCase();
+    const zona = cols[1]?.trim().toUpperCase();
+    const status = cols[7]?.trim().toUpperCase();
 
-        if(zona === "ZONA 1") zona1++;
-        if(zona === "ZONA 2") zona2++;
-        if(zona === "ZONA 3") zona3++;
-        if(zona === "ZONA 4") zona4++;
-        if(zona === "ZONA 5") zona5++;
-    }
+    if(zona === "ZONA 1") zona1++;
+    if(zona === "ZONA 2") zona2++;
+    if(zona === "ZONA 3") zona3++;
+    if(zona === "ZONA 4") zona4++;
+    if(zona === "ZONA 5") zona5++;
 
+    // HITUNG PROGRESS
+    if(status === "SELESAI") selesai++;
+    if(status === "PROSES") proses++;
+    if(status === "BARU") baru++;
+}
     document.querySelector(".big-number").textContent = total;
 
     document.getElementById("z1").textContent = zona1;
@@ -335,10 +398,15 @@ document.getElementById("alarmStatus")
 document.getElementById("alarmStatus")
 .classList.add("active");
 document.getElementById("runningText").innerHTML = `
-🔴 ALARM METER HILANG :
-${alarmData.pelanggan}
- | ${alarmData.zona}
- | ${alarmData.alamat}
+🚨 METER HILANG BARU : ${alarmData.pelanggan} | ${alarmData.zona}
+&nbsp;&nbsp;&nbsp;◆&nbsp;&nbsp;&nbsp;
+🔥 HOT ZONE : ${hotZona} (${jumlahKasus} KASUS AKTIF)
+&nbsp;&nbsp;&nbsp;◆&nbsp;&nbsp;&nbsp;
+🚦 LEVEL : ${level}
+&nbsp;&nbsp;&nbsp;◆&nbsp;&nbsp;&nbsp;
+🏆 BULAN TERTINGGI : ${bulanMax} (${maxKasus} KASUS)
+&nbsp;&nbsp;&nbsp;◆&nbsp;&nbsp;&nbsp;
+📉 BULAN TERENDAH : ${bulanMin} (${minKasus} KASUS)
 `;
 const currentAlarm =
     alarmData.pelanggan + "_" +
@@ -444,7 +512,20 @@ tableBody.innerHTML += `
 setInterval(() => {
     location.reload();
 }, 60000);
+
+// UPDATE BAR CHART
 zonaChart.update();
+
+// UPDATE DONUT CHART
+progressChart.data.datasets[0].data = [
+
+    selesai,
+    proses,
+    baru
+
+];
+
+progressChart.update();
 });
 fetch(TREND_URL)
 .then(response => response.text())
@@ -472,13 +553,13 @@ fetch(TREND_URL)
     trendChartRH.data.datasets[1].data = kasus;
 
     trendChartRH.update();
-    const maxKasus = Math.max(...kasus);
-const minKasus = Math.min(...kasus);
+   maxKasus = Math.max(...kasus);
+minKasus = Math.min(...kasus);
 
-const bulanMax =
+bulanMax =
 bulan[kasus.indexOf(maxKasus)];
 
-const bulanMin =
+bulanMin =
 bulan[kasus.indexOf(minKasus)];
 
 document.getElementById("bulanTertinggi")

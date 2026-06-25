@@ -610,3 +610,11 @@ body{
     max-width:100%;
     height:auto;
 }
+.progress-card{
+    width:260px;
+    height:220px;
+}
+
+.progress-card canvas{
+    max-height:150px;
+}
