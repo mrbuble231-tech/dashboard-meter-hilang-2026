@@ -2,7 +2,60 @@ let lastAlarm =
 localStorage.getItem("lastAlarm") || "";
 let zonaChart;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
+const TREND_URL =
+"https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?gid=1078006060&single=true&output=csv";
+const trendCtx =
+document.getElementById("trendChart")
+.getContext("2d");
 
+const trendChartRH = new Chart(trendCtx, {
+
+    type: "line",
+
+    data: {
+        labels: [],
+        datasets: [{
+            label: "Trend Meter Hilang",
+            data: [],
+            borderColor: "#00ffcc",
+            backgroundColor: "#00ffcc",
+            borderWidth: 4,
+            tension: 0.3,
+            fill: false
+        }]
+    },
+
+    options: {
+        responsive: true,
+
+        plugins: {
+            legend: {
+                labels: {
+                    color: "white"
+                }
+            }
+        },
+
+        scales: {
+
+            x: {
+                ticks: {
+                    color: "white"
+                }
+            },
+
+            y: {
+                beginAtZero: true,
+                ticks: {
+                    color: "white"
+                }
+            }
+
+        }
+
+    }
+
+});
 const ctx = document.getElementById('zonaChart');
 
 zonaChart = new Chart(ctx,{
@@ -237,6 +290,24 @@ if(currentAlarm !== lastAlarm){
         document.getElementById("alarmSound");
 
     sound.play();
+    document.getElementById("popupNama")
+.textContent = alarmData.pelanggan;
+
+document.getElementById("popupZona")
+.textContent = "📍 " + alarmData.zona;
+
+document.getElementById("popupTanggal")
+.textContent = "📅 " + alarmData.tanggal;
+
+document.getElementById("emergencyPopup")
+.style.display = "flex";
+
+setTimeout(() => {
+
+    document.getElementById("emergencyPopup")
+    .style.display = "none";
+
+}, 10000);
 
     setTimeout(() => {
         sound.pause();
@@ -315,7 +386,33 @@ setInterval(() => {
 }, 60000);
 zonaChart.update();
 });
+fetch(TREND_URL)
+.then(response => response.text())
+.then(csv => {
 
+    const rows = csv.trim().split("\n");
+
+    const bulan = [];
+    const kasus = [];
+
+    for(let i=1;i<rows.length;i++){
+
+        const cols = rows[i].split(",");
+
+        bulan.push(cols[0]);
+
+        kasus.push(
+            parseInt(cols[1]) || 0
+        );
+    }
+
+    trendChartRH.data.labels = bulan;
+
+    trendChartRH.data.datasets[0].data = kasus;
+
+    trendChartRH.update();
+
+});
 function updateClock(){
 
     const now = new Date();
@@ -340,5 +437,17 @@ updateClock();
 setInterval(updateClock,1000);
 function testSound() {
     const sound = document.getElementById("alarmSound");
-    sound.play();
+    sound.play().catch(err => {
+    console.log("Audio diblokir browser:", err);
+});
 }
+document.addEventListener("click", () => {
+
+    const sound =
+    document.getElementById("alarmSound");
+
+    sound.play();
+    sound.pause();
+    sound.currentTime = 0;
+
+}, { once:true });

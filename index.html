@@ -109,7 +109,10 @@
 
         </div>
     </div>
-
+  <div class="card trend-card">
+    <h2>📈 Trend Meter Hilang Januari–Juni 2026</h2>
+    <canvas id="trendChart"></canvas>
+</div>
     <div class="card hotzone-card">
         <h3>🔥 HOT ZONE</h3>
 
@@ -173,6 +176,28 @@
 <audio id="alarmSound" preload="auto">
     <source src="alarm.mp3/alarm.mp3" type="audio/mpeg">
 </audio>
+<div id="emergencyPopup" class="emergency-popup">
 
+    <div class="popup-box">
+
+        <div class="popup-title">
+            🚨 LAPORAN METER HILANG BARU 🚨
+        </div>
+
+        <div id="popupNama" class="popup-nama">
+            -
+        </div>
+
+        <div id="popupZona" class="popup-zona">
+            -
+        </div>
+
+        <div id="popupTanggal" class="popup-tanggal">
+            -
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>
