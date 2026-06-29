@@ -523,23 +523,8 @@ document.getElementById("bulanTerendah")
 .textContent = bulanMin;
  document.getElementById("nilaiTerendah")
 .textContent = minKasus + " Kasus";
-
-// =========================
-// RUNNING TEXT RHINOCEROS
-// =========================
-
-document.getElementById("runningText").innerHTML = `
-🚨 <b>METER HILANG AKTIF :</b> ${alarmList.length} KASUS
-◆
-🔥 HOT ZONE : ${hotZona}
-◆
-🚦 LEVEL : ${level}
-◆
-🏆 BULAN TERTINGGI : ${bulanMax}
-◆
-📉 BULAN TERENDAH : ${bulanMin}
-`;
 });
+
 function updateClock(){
 
     const now = new Date();
