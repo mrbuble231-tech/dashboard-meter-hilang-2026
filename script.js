@@ -3,6 +3,10 @@ parseInt(
     localStorage.getItem("lastRowCount") || "0"
 );
 let zonaChart;
+let bulanMax = "-";
+let bulanMin = "-";
+let maxKasus = 0;
+let minKasus = 0;
 const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?output=csv";
 const TREND_URL =
 "https://docs.google.com/spreadsheets/d/e/2PACX-1vTTAgE1S935-2P6AUUddelLeHJBOcUgrzAROMQAzu1AyGhm6SVRncEcuplPqxnvdFKsZDEcIOqyhwbv/pub?gid=1078006060&single=true&output=csv";
@@ -161,7 +165,6 @@ rows.push(...dataRows);
 
     let total = rows.length - 1;
     const currentRowCount = total;
-    let alarmData = null;
     let alarmList = [];
 let zonaAktif = {};
 
@@ -303,8 +306,7 @@ for(let i=1;i<rows.length;i++){
 
 }
 if(alarmList.length > 0){
-
-let html = "";
+    let html = "";
 
 alarmList.slice(0,5).forEach(item=>{
 
@@ -312,19 +314,17 @@ html += `
 
 <div class="alarm-item">
 
-<div class="alarm-name">
-👤 ${item.pelanggan}
-</div>
+    <div class="alarm-name">
+        👤 ${item.pelanggan}
+    </div>
 
-<div class="alarm-zona">
-📍 ${item.zona}
-</div>
+    <div class="alarm-zona">
+        📍 ${item.zona}
+    </div>
 
-<div class="alarm-tanggal">
-📅 ${item.tanggal}
-</div>
-
-<hr>
+    <div class="alarm-date">
+        🗓 ${item.tanggal}
+    </div>
 
 </div>
 
@@ -338,8 +338,7 @@ html += `
 
 <div class="alarm-more">
 
-+ ${alarmList.length-5}
-laporan lainnya...
++ ${alarmList.length-5} laporan lainnya...
 
 </div>
 
@@ -347,21 +346,17 @@ laporan lainnya...
 
 }
 
-document.getElementById("alarmContainer").innerHTML = html;
-document.getElementById("alarmStatus").innerHTML =
-"🔴 ALARM AKTIF";
+    document.getElementById("alarmStatus").innerHTML =
+    "🔴 ALARM AKTIF";
 
-document.getElementById("alarmStatus")
-.classList.remove("normal");
+    document.getElementById("alarmStatus")
+    .classList.remove("normal");
 
-document.getElementById("alarmStatus")
-.classList.add("active");
-document.getElementById("runningText").innerHTML = `
-🔴 ALARM METER HILANG :
-${alarmData.pelanggan}
- | ${alarmData.zona}
- | ${alarmData.alamat}
-`;
+    document.getElementById("alarmStatus")
+    .classList.add("active");
+
+    document.getElementById("alarmContainer").innerHTML = html;
+
 }
 else{
 
@@ -375,8 +370,9 @@ else{
     .classList.add("normal");
 
     document.getElementById("alarmContainer").innerHTML = "";
+
 }
-if(currentRowCount > lastRowCount && alarmData){
+if(currentRowCount > lastRowCount && alarmList.length > 0){
 
     const sound =
     document.getElementById("alarmSound");
@@ -464,6 +460,17 @@ setInterval(() => {
 zonaChart.update();
 
 // Simpan jumlah baris terakhir
+document.getElementById("runningText").innerHTML = `
+🚨 <b>METER HILANG AKTIF :</b> ${alarmList.length} KASUS
+&nbsp;&nbsp;◆&nbsp;&nbsp;
+🔥 <b>HOT ZONE :</b> ${hotZona} (${jumlahKasus} KASUS)
+&nbsp;&nbsp;◆&nbsp;&nbsp;
+🚦 <b>LEVEL :</b> ${level}
+&nbsp;&nbsp;◆&nbsp;&nbsp;
+🏆 <b>BULAN TERTINGGI :</b> ${bulanMax}
+&nbsp;&nbsp;◆&nbsp;&nbsp;
+📉 <b>BULAN TERENDAH :</b> ${bulanMin}
+`;
 localStorage.setItem(
     "lastRowCount",
     currentRowCount
@@ -496,13 +503,13 @@ fetch(TREND_URL)
     trendChartRH.data.datasets[1].data = kasus;
 
     trendChartRH.update();
-    const maxKasus = Math.max(...kasus);
-const minKasus = Math.min(...kasus);
+maxKasus = Math.max(...kasus);
+minKasus = Math.min(...kasus);
 
-const bulanMax =
+bulanMax =
 bulan[kasus.indexOf(maxKasus)];
 
-const bulanMin =
+bulanMin =
 bulan[kasus.indexOf(minKasus)];
 
 document.getElementById("bulanTertinggi")
@@ -513,10 +520,29 @@ document.getElementById("nilaiTertinggi")
 
 document.getElementById("bulanTerendah")
 .textContent = bulanMin;
-
-document.getElementById("nilaiTerendah")
+ document.getElementById("nilaiTerendah")
 .textContent = minKasus + " Kasus";
 
+// =========================
+// RUNNING TEXT RHINOCEROS
+// =========================
+
+const runningText = document.getElementById("runningText");
+
+if(runningText){
+
+    runningText.innerHTML = `
+    🚨 <b>METER HILANG AKTIF :</b> ${alarmList.length} KASUS
+    &nbsp;&nbsp;◆&nbsp;&nbsp;
+    🔥 <b>HOT ZONE :</b> ${hotZona} (${jumlahKasus} KASUS AKTIF)
+    &nbsp;&nbsp;◆&nbsp;&nbsp;
+    🚦 <b>LEVEL :</b> ${level}
+    &nbsp;&nbsp;◆&nbsp;&nbsp;
+    🏆 <b>BULAN TERTINGGI :</b> ${bulanMax} (${maxKasus} KASUS)
+    &nbsp;&nbsp;◆&nbsp;&nbsp;
+    📉 <b>BULAN TERENDAH :</b> ${bulanMin} (${minKasus} KASUS)
+    `;
+}
 });
 function updateClock(){
 

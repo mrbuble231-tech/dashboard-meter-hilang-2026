@@ -624,3 +624,68 @@ body{
     font-size:14px;
     font-weight:bold;
 }
+/* ========================= */
+/* RHINOCEROS MULTI ALARM */
+/* ========================= */
+
+.alarm-item{
+
+    padding:12px 0;
+
+    border-bottom:2px solid rgba(255,255,255,.65);
+
+}
+
+.alarm-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.alarm-name{
+
+    font-size:29px;
+
+    font-weight:bold;
+
+    color:#ffffff;
+
+    margin-bottom:8px;
+
+    line-height:1.2;
+
+}
+
+.alarm-zona{
+
+    font-size:24px;
+
+    color:#00ff99;
+
+    font-weight:bold;
+
+    margin-bottom:6px;
+
+}
+
+.alarm-date{
+
+    font-size:22px;
+
+    color:#ffffff;
+
+}
+
+.alarm-more{
+
+    margin-top:15px;
+
+    text-align:center;
+
+    color:#00ff99;
+
+    font-size:24px;
+
+    font-weight:bold;
+
+}
