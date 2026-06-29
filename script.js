@@ -379,15 +379,16 @@ if(currentRowCount > lastRowCount && alarmList.length > 0){
 
     sound.play();
 
-    document.getElementById("popupNama")
-    .textContent = alarmData.pelanggan;
+const popupData = alarmList[0];
 
-    document.getElementById("popupZona")
-    .textContent = "📍 " + alarmData.zona;
+document.getElementById("popupNama")
+.textContent = popupData.pelanggan;
 
-    document.getElementById("popupTanggal")
-    .textContent = "📅 " + alarmData.tanggal;
+document.getElementById("popupZona")
+.textContent = "📍 " + popupData.zona;
 
+document.getElementById("popupTanggal")
+.textContent = "📅 " + popupData.tanggal;
     document.getElementById("emergencyPopup")
     .style.display = "flex";
 
@@ -527,22 +528,17 @@ document.getElementById("bulanTerendah")
 // RUNNING TEXT RHINOCEROS
 // =========================
 
-const runningText = document.getElementById("runningText");
-
-if(runningText){
-
-    runningText.innerHTML = `
-    🚨 <b>METER HILANG AKTIF :</b> ${alarmList.length} KASUS
-    &nbsp;&nbsp;◆&nbsp;&nbsp;
-    🔥 <b>HOT ZONE :</b> ${hotZona} (${jumlahKasus} KASUS AKTIF)
-    &nbsp;&nbsp;◆&nbsp;&nbsp;
-    🚦 <b>LEVEL :</b> ${level}
-    &nbsp;&nbsp;◆&nbsp;&nbsp;
-    🏆 <b>BULAN TERTINGGI :</b> ${bulanMax} (${maxKasus} KASUS)
-    &nbsp;&nbsp;◆&nbsp;&nbsp;
-    📉 <b>BULAN TERENDAH :</b> ${bulanMin} (${minKasus} KASUS)
-    `;
-}
+document.getElementById("runningText").innerHTML = `
+🚨 <b>METER HILANG AKTIF :</b> ${alarmList.length} KASUS
+◆
+🔥 HOT ZONE : ${hotZona}
+◆
+🚦 LEVEL : ${level}
+◆
+🏆 BULAN TERTINGGI : ${bulanMax}
+◆
+📉 BULAN TERENDAH : ${bulanMin}
+`;
 });
 function updateClock(){
 
