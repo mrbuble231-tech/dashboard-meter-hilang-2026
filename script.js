@@ -346,6 +346,19 @@ ${alarmData.pelanggan}
  | ${alarmData.alamat}
 `;
 }
+else{
+
+    document.getElementById("alarmStatus").innerHTML =
+    "🟢 NORMAL";
+
+    document.getElementById("alarmStatus")
+    .classList.remove("active");
+
+    document.getElementById("alarmStatus")
+    .classList.add("normal");
+
+    document.getElementById("alarmContainer").innerHTML = "";
+}
 if(currentRowCount > lastRowCount && alarmData){
 
     const sound =
@@ -378,19 +391,6 @@ if(currentRowCount > lastRowCount && alarmData){
         sound.currentTime = 0;
 
     },5000);
-
-}
-
-else{
-
-    document.getElementById("alarmStatus").innerHTML =
-    "🟢 NORMAL";
-
-    document.getElementById("alarmStatus")
-    .classList.remove("active");
-
-    document.getElementById("alarmStatus")
-    .classList.add("normal");
 
 }
 const tableBody = document.getElementById("latestTable");
@@ -443,7 +443,15 @@ tableBody.innerHTML += `
 setInterval(() => {
     location.reload();
 }, 60000);
+
 zonaChart.update();
+
+// Simpan jumlah baris terakhir
+localStorage.setItem(
+    "lastRowCount",
+    currentRowCount
+);
+
 });
 fetch(TREND_URL)
 .then(response => response.text())
@@ -518,13 +526,8 @@ setInterval(updateClock,1000);
 function testSound() {
     const sound = document.getElementById("alarmSound");
     sound.play().catch(err => {
-    console.log("Audio diblokir browser:", err);
-        localStorage.setItem(
-    "lastRowCount",
-    currentRowCount
-);
-
-});
+        console.log("Audio diblokir browser:", err);
+    });
 }
 document.addEventListener("click", () => {
 
