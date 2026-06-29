@@ -162,6 +162,7 @@ rows.push(...dataRows);
     let total = rows.length - 1;
     const currentRowCount = total;
     let alarmData = null;
+    let alarmList = [];
 let zonaAktif = {};
 
     for(let i=1;i<rows.length;i++){
@@ -282,55 +283,71 @@ for(let i=1;i<rows.length;i++){
     const cols = rows[i].split(",");
 
     const status = cols[7]?.trim().toUpperCase();
-const zona = cols[1]?.trim().toUpperCase();
 
-if(status === "PROSES" || status === "BARU"){
+    if(status === "PROSES" || status === "BARU"){
 
-    zonaAktif[zona] =
-    (zonaAktif[zona] || 0) + 1;
+        alarmList.push({
 
-        
-        
-alarmData = {
-    pelanggan: cols[3],
-    nomor: cols[2],
-    zona: cols[1],
-    alamat: cols[5],
-    telepon: cols[4],
-    golongan: cols[6],
-    tanggal: cols[0],
-    status: cols[7]
-};
-        break;
+            pelanggan: cols[3],
+            nomor: cols[2],
+            zona: cols[1],
+            alamat: cols[5],
+            telepon: cols[4],
+            golongan: cols[6],
+            tanggal: cols[0],
+            status: cols[7]
+
+        });
+
     }
+
 }
-if(alarmData){
+if(alarmList.length > 0){
 
-document.getElementById("alarmContainer").innerHTML = `
-    <div class="alarm-name">
-        👤 ${alarmData.pelanggan}
-    </div>
+let html = "";
 
-    <div class="alarm-zona">
-        📍 ${alarmData.zona}
-    </div>
+alarmList.slice(0,5).forEach(item=>{
 
-    <div class="alarm-alamat">
-        ${alarmData.alamat}
-    </div>
+html += `
 
-    <div class="alarm-telp">
-        ☎ ${alarmData.telepon}
-    </div>
+<div class="alarm-item">
 
-    <div class="alarm-gol">
-        🏷 Gol. ${alarmData.golongan}
-    </div>
+<div class="alarm-name">
+👤 ${item.pelanggan}
+</div>
+
+<div class="alarm-zona">
+📍 ${item.zona}
+</div>
 
 <div class="alarm-tanggal">
-    📅 ${alarmData.tanggal}
+📅 ${item.tanggal}
 </div>
+
+<hr>
+
+</div>
+
 `;
+
+});
+
+if(alarmList.length > 5){
+
+html += `
+
+<div class="alarm-more">
+
++ ${alarmList.length-5}
+laporan lainnya...
+
+</div>
+
+`;
+
+}
+
+document.getElementById("alarmContainer").innerHTML = html;
 document.getElementById("alarmStatus").innerHTML =
 "🔴 ALARM AKTIF";
 
