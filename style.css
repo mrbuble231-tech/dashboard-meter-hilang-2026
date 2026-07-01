@@ -12,37 +12,91 @@ body{
 }
 
 .header{
-    width:95%;
-    margin:auto;
 
-    display:flex;
-    justify-content:space-between;
+    width:95%;
+
+    margin:20px auto;
+
+    display:grid;
+
+    grid-template-columns:220px 1fr 280px;
+
     align-items:center;
 
-    padding:20px 0;
+    background:#0d1728;
+
+    border:2px solid #00ff99;
+
+    border-radius:18px;
+
+    padding:12px 25px;
+
+    box-shadow:0 0 25px rgba(0,255,153,.25);
+
 }
 .header-left{
-    text-align:left;
-}
 
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
+.header-left{
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+}
 .clock-box{
+    margin-left:auto;
+
+    display:flex;
+    flex-direction:column;
+    align-items:flex-end;
+
     text-align:right;
 }
+#weatherIcon{
+    font-size:36px;
+    margin-top:10px;
+}
+
+#weatherText{
+    font-size:22px;
+    font-weight:bold;
+    color:#ffffff;
+    margin-top:5px;
+}
+
+#lastUpdate{
+    font-size:16px;
+    color:#b8c2cc;
+    margin-top:8px;
+}
+
 
 #jam{
-    font-size:32px;
-    font-weight:bold;
+
+    font-size:42px;
+
     color:#00ff99;
-}
 
+    font-weight:bold;
+
+}
 #tanggal{
-    margin-top:5px;
-    font-size:14px;
-    color:#ccc;
+    font-size:18px;
+    color:#ffffff;
+    margin-top:6px;
 }
-
 .header h1{
-    font-size:clamp(24px,2vw,42px);
+    font-size:52px;
+    line-height:1.05;
 }
 
 .header p{
@@ -620,8 +674,8 @@ body{
     height:150px !important;
 }
 .version-tag{
+    font-size:16px;
     color:#00ffcc;
-    font-size:14px;
     font-weight:bold;
 }
 /* ========================= */
@@ -687,5 +741,42 @@ body{
     font-size:24px;
 
     font-weight:bold;
+
+}
+/* ========================= */
+/* STATUS BAR */
+/* ========================= */
+
+.status-bar{
+
+    width:95%;
+
+    margin:0 auto 12px auto;
+
+    display:flex;
+
+    justify-content:space-around;
+
+    align-items:center;
+
+    padding:10px 20px;
+
+    background:#0d1728;
+
+    border:1px solid #00ff99;
+
+    border-radius:10px;
+
+    color:#ffffff;
+
+    font-size:16px;
+
+    font-weight:bold;
+
+}
+
+.status-bar span{
+
+    white-space:nowrap;
 
 }

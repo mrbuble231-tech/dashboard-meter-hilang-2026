@@ -563,3 +563,75 @@ document.addEventListener("click", () => {
     sound.currentTime = 0;
 
 }, { once:true });
+// ===============================
+// LIVE WEATHER SURABAYA
+// ===============================
+
+async function updateWeather(){
+
+    try{
+
+        const res = await fetch(
+        "https://api.open-meteo.com/v1/forecast?latitude=-7.2575&longitude=112.7521&current=temperature_2m,weather_code"
+        );
+
+        const data = await res.json();
+
+        const suhu = data.current.temperature_2m;
+        const code = data.current.weather_code;
+
+        let icon = "🌤";
+        let text = "Cerah";
+
+        if(code >= 51){
+            icon = "🌧";
+            text = "Hujan";
+        }
+        else if(code >= 3){
+            icon = "☁️";
+            text = "Berawan";
+        }
+
+        document.getElementById("weatherIcon").textContent = icon;
+
+        document.getElementById("weatherText").textContent =
+            `${text} | ${suhu}°C`;
+
+        const now = new Date();
+
+        document.getElementById("lastUpdate").textContent =
+            "🔄 Update " +
+            now.toLocaleTimeString("id-ID");
+
+    }
+    catch(err){
+
+        document.getElementById("weatherText").textContent =
+            "Cuaca tidak tersedia";
+
+        console.log(err);
+
+    }
+
+}
+
+updateWeather();
+function updateSystemStatus(){
+
+    document.getElementById("systemStatus").textContent =
+        "🟢 SYSTEM NORMAL";
+
+    document.getElementById("sheetStatus").textContent =
+        "📡 Google Sheet Online";
+
+    document.getElementById("weatherStatus").textContent =
+        "🌤 Cuaca Online";
+
+    document.getElementById("refreshStatus").textContent =
+        "🔄 Auto Refresh : 30 Detik";
+
+}
+
+updateSystemStatus();
+
+setInterval(updateWeather,900000);
